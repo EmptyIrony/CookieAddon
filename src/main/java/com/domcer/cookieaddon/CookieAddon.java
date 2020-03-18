@@ -25,8 +25,7 @@ public final class CookieAddon extends JavaPlugin {
         // Plugin startup logic
         ins = this;
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
-        Assemble assemble = new Assemble(this,new ScoreImpl());
-        assemble.setTicks(2);
+        new Assemble(this,new ScoreImpl());
 
         new BukkitRunnable() {
             @Override
