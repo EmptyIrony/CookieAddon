@@ -32,8 +32,10 @@ public final class CookieAddon extends JavaPlugin {
             public void run() {
                 for (Entity entity : Bukkit.getWorld("world").getEntities()) {
                     if (entity instanceof ArmorStand){
-                        if (entity.getPassenger() == null){
-                            entity.remove();
+                        if (!((ArmorStand) entity).isVisible()) {
+                            if (entity.getPassenger() == null) {
+                                entity.remove();
+                            }
                         }
                     }
                 }
@@ -45,10 +47,5 @@ public final class CookieAddon extends JavaPlugin {
                 });
             }
         }.runTaskTimer(this,20,20*60);
-    }
-
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
     }
 }

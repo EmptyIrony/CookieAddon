@@ -3,29 +3,27 @@ package com.domcer.cookieaddon;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import me.nikl.gamebox.events.EnterGameBoxEvent;
+import me.nikl.gamebox.events.LeftGameBoxEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Stairs;
-import org.bukkit.scheduler.BukkitRunnable;
 import strafe.games.core.util.CC;
 import strafe.games.core.util.ItemBuilder;
-import strafe.games.core.util.LocationUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -74,12 +72,18 @@ public class PlayerListener implements Listener {
                 e.getPlayer().sendMessage(CC.translate("&4&o➣ &c这个座位已经有人了!换一个座位吧~"));
                 return;
             }
+            Block block = e.getClickedBlock();
+            Stairs stairs = (Stairs) block.getState().getData();
+            if (Util.faceToYaw(stairs.getDescendingDirection()) == 1000) {
+                return;
+            }
+
+
             CookieAddon.getSitBlocks().put(e.getPlayer().getName(), e.getClickedBlock());
             CookieAddon.siting.add(e.getPlayer().getUniqueId());
 
             Location location = getSitLocation(e.getClickedBlock());
-            Block block = e.getClickedBlock();
-            Stairs stairs = (Stairs) block.getState().getData();
+
             ArmorStand stand = (ArmorStand) e.getPlayer().getWorld().spawnEntity(location.add(0, 0.2, 0), EntityType.ARMOR_STAND);
             Bukkit.getScheduler().runTask(CookieAddon.getIns(), () -> {
                 if (stand.isValid()) {
@@ -97,6 +101,13 @@ public class PlayerListener implements Listener {
                 }
                 Cooldown.setCooldown(e.getPlayer().getUniqueId(), 5);
                 Cooldown.startCooldownTask(e.getPlayer().getUniqueId());
+                Hologram hologram = HologramsAPI.createHologram(CookieAddon.ins, e.getPlayer().getLocation().add(0, 1.5, 0));
+
+                hologram.appendTextLine(CC.translate("&e正在玩&b街机游戏"));
+                if (cache.get(e.getPlayer().getUniqueId()) != null) {
+                    cache.get(e.getPlayer().getUniqueId()).delete();
+                }
+                cache.put(e.getPlayer().getUniqueId(), hologram);
 
                 Bukkit.dispatchCommand(e.getPlayer(), "gb");
             });
@@ -179,13 +190,35 @@ public class PlayerListener implements Listener {
                     .name("&6右键回到街机游戏")
                     .build();
 
-            event.getPlayer().getInventory().setItem(4,itemStack);
+            event.getPlayer().getInventory().setItem(4, itemStack);
         }
     }
 
     @EventHandler
     public void onWeather(WeatherChangeEvent event) {
         if (event.toWeatherState()) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onEnterGame(EnterGameBoxEvent event) {
+        if (!cache.containsKey(event.getPlayer().getUniqueId())) {
+            event.setCancelled(true);
+            event.getPlayer().sendMessage(CC.translate("&4&o➣ &c你必须坐着才能玩街机游戏噢"));
+        }
+    }
+
+    @EventHandler
+    public void onEnterGame(LeftGameBoxEvent event) {
+        if (cache.containsKey(event.getPlayer().getUniqueId())) {
+            cache.remove(event.getPlayer().getUniqueId()).delete();
+        }
+    }
+
+    @EventHandler
+    public void onInteractAtEntity(PlayerInteractAtEntityEvent event) {
+        if (event.getRightClicked() != null && event.getRightClicked() instanceof ItemFrame) {
             event.setCancelled(true);
         }
     }

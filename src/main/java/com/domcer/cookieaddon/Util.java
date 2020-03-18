@@ -19,6 +19,6 @@ public class Util {
             case WEST:
                 return 270;
         }
-        return 0;
+        return 1000;
     }
 }
