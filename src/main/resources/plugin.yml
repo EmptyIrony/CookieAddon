@@ -1,0 +1,5 @@
+name: CookieAddon
+version: ${project.version}
+main: com.domcer.cookieaddon.CookieAddon
+depend:
+  - Stone

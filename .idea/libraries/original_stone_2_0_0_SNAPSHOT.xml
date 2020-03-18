@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="original-stone-2.0.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../MikuV2/target/original-stone-2.0.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
