@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="GameBox">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../gamebox/target/GameBox.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../Libs/GameBox.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="HolographicDisplays">
     <CLASSES>
-      <root url="jar://$USER_HOME$/libs/HolographicDisplays.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../Libs/HolographicDisplays.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
