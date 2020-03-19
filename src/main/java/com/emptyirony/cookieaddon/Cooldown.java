@@ -1,10 +1,11 @@
-package com.domcer.cookieaddon;
+package com.emptyirony.cookieaddon;
+
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import org.bukkit.scheduler.BukkitRunnable;
 /**
  * 2 * @Author: EmptyIrony
  * 3 * @Date: 2020/2/11 13:57

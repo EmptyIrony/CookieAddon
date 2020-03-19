@@ -1,4 +1,4 @@
-package com.domcer.cookieaddon;
+package com.emptyirony.cookieaddon;
 
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;

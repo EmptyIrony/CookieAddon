@@ -1,4 +1,4 @@
-package com.domcer.cookieaddon;
+package com.emptyirony.cookieaddon;
 
 import org.apache.commons.lang.StringUtils;
 

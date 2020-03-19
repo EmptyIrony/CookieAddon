@@ -1,4 +1,4 @@
-package com.domcer.cookieaddon;
+package com.emptyirony.cookieaddon;
 
 import me.nikl.gamebox.GameBox;
 import me.nikl.gamebox.games.cookieclicker.CCGame;
@@ -43,8 +43,8 @@ public class ScoreImpl implements AssembleAdapter {
         lines.add("");
         if (games.get(player.getUniqueId()) != null) {
             CCGame ccGame = games.get(player.getUniqueId());
-            lines.add("&f饼干总数： &e" + Format.formatNum(String.valueOf((int)ccGame.getTotalCookiesProduced()), false));
-            lines.add("&f当前持有饼干： &e" + Format.formatNum(String.valueOf((int)ccGame.getCookies()), false));
+            lines.add("&f饼干总数： &e" + Format.formatNum(String.valueOf((long) ccGame.getTotalCookiesProduced()), false));
+            lines.add("&f当前持有饼干： &e" + Format.formatNum(String.valueOf((long) ccGame.getCookies()), false));
             lines.add("");
         }
         lines.add("&7&opanshimc.cn");

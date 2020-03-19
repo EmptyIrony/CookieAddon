@@ -1,4 +1,4 @@
-package com.domcer.cookieaddon;
+package com.emptyirony.cookieaddon;
 
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
