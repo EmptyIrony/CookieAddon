@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
@@ -74,7 +75,7 @@ public class PlayerListener implements Listener {
             }
             Block block = e.getClickedBlock();
             Stairs stairs = (Stairs) block.getState().getData();
-            if (Util.faceToYaw(stairs.getDescendingDirection()) == 1000) {
+            if (stairs.getFacing() != BlockFace.UP) {
                 return;
             }
 
@@ -101,14 +102,6 @@ public class PlayerListener implements Listener {
                 }
                 Cooldown.setCooldown(e.getPlayer().getUniqueId(), 5);
                 Cooldown.startCooldownTask(e.getPlayer().getUniqueId());
-                Hologram hologram = HologramsAPI.createHologram(CookieAddon.ins, e.getPlayer().getLocation().add(0, 1.5, 0));
-
-                hologram.appendTextLine(CC.translate("&e正在玩&b街机游戏"));
-                if (cache.get(e.getPlayer().getUniqueId()) != null) {
-                    cache.get(e.getPlayer().getUniqueId()).delete();
-                }
-                cache.put(e.getPlayer().getUniqueId(), hologram);
-
                 Bukkit.dispatchCommand(e.getPlayer(), "gb");
             });
         }
@@ -206,6 +199,14 @@ public class PlayerListener implements Listener {
         if (!cache.containsKey(event.getPlayer().getUniqueId())) {
             event.setCancelled(true);
             event.getPlayer().sendMessage(CC.translate("&4&o➣ &c你必须坐着才能玩街机游戏噢"));
+        } else {
+            Hologram hologram = HologramsAPI.createHologram(CookieAddon.ins, event.getPlayer().getLocation().add(0, 1.8, 0));
+
+            hologram.appendTextLine(CC.translate("&e正在玩&b街机游戏"));
+            if (cache.get(event.getPlayer().getUniqueId()) != null) {
+                cache.get(event.getPlayer().getUniqueId()).delete();
+            }
+            cache.put(event.getPlayer().getUniqueId(), hologram);
         }
     }
 
